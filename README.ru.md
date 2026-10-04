@@ -16,13 +16,8 @@ GNOME, включаются в шторке рядом с Wi-Fi и управл�
 [English version](README.md)
 
 <p align="center">
-  <img src="docs/images/network-settings.png" width="520"
-       alt="Подключения VLESS с переключателями в Настройках GNOME → Сеть">
-</p>
-<p align="center">
-  <img src="docs/images/add-vpn.png" width="420" alt="VLESS (Xray) в окне добавления VPN">
-  <img src="docs/images/editor.png" width="330"
-       alt="Редактор подключения с импортом ссылки vless:// или подписки">
+  <img src="docs/images/screenshots.png" width="880"
+       alt="Подключения VLESS в Настройках GNOME → Сеть, VLESS (Xray) в окне добавления VPN и редактор подключения">
 </p>
 
 ## Возможности
