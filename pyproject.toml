@@ -1,0 +1,55 @@
+# Tooling configuration only. The project is built and installed with Meson,
+# see meson.build and docs/development.md.
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F",   # pycodestyle, pyflakes
+    "I",             # isort
+    "B",             # bugbear
+    "UP",            # pyupgrade
+    "S",             # bandit (security)
+    "SIM", "C4", "RET", "RUF",
+    "N",             # pep8-naming
+    "PT",            # pytest style
+    "PL",            # pylint
+]
+ignore = [
+    "PLR0911", "PLR0912", "PLR0913", "PLR0915",  # complexity limits are enforced in review
+    "S603",   # subprocess without shell: arguments are never user-controlled strings
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PLR2004", "S105", "S106", "S607", "E402"]
+# PyGObject requires the GI version to be pinned before importing from gi.repository.
+"src/nm_vless/{service,nmclient,vpnconfig,cli,auth_dialog,proxyguard}.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src", "tests"]
+mypy_path = "src"
+strict = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["gi", "gi.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# NM.VpnServicePlugin comes from GObject introspection and is typed as Any.
+module = ["nm_vless.service"]
+disallow_subclassing_any = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = ["error"]

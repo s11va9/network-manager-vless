@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Xray-core release bundled in packages. Update the version and all checksums together;
+# checksums are the SHA2-256 values published in the release's .dgst files.
+version=v26.7.28
+amd64=Xray-linux-64.zip 8195d909f1109b8f3d99eefe401a3c451d7bf4af71f24d3815420f77e5dd2a40
+arm64=Xray-linux-arm64-v8a.zip f5698bb218ada3b4022db26fafc39601c5f53b46b19eb76c9616325985807501

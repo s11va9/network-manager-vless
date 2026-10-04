@@ -1,0 +1,6 @@
+# Files with translatable strings (GNOME Settings editor).
+src/editor/nm-vless-dialog.ui
+src/editor/nm-vless-editor-plugin.c
+src/editor/nm-vless-editor.c
+src/nm_vless/auth_dialog.py
+src/nm_vless/proxyguard.py

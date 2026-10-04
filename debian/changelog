@@ -1,0 +1,47 @@
+network-manager-vless (0.5.0) unstable; urgency=medium
+
+  * Turn off another client's local system proxy while VLESS is connected
+    (nm-vless-proxy-guard user service) and restore it afterwards.
+  * Route 0.0.0.0/1 and 128.0.0.0/1 (::/1, 8000::/1) through the tunnel, so
+    other clients' default routes no longer take the traffic.
+  * Store the subscription of a profile in vpn.data: netplan lost the user
+    setting, so updates created every server again. Remove the duplicates.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Sat, 03 Oct 2026 22:00:00 +0700
+
+network-manager-vless (0.4.0) unstable; urgency=medium
+
+  * Add an authentication helper: GNOME Settings no longer waits 25 seconds
+    when opening a VLESS connection.
+  * Restart Xray-core automatically if it exits while connected.
+  * Keep DNS queries inside the tunnel (negative DNS priority).
+  * Send the server the domain of each connection (sniffing), as other Xray
+    clients do; sites routed by domain on the server failed before.
+  * Warn about proxy environment variables that point to a local proxy.
+  * Log the service and xray to the journal (NetworkManager drops their output).
+  * Add "nm-vless test" to check sites through a server without connecting.
+  * Move DNS of existing subscription profiles into the tunnel on update.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Mon, 28 Sep 2026 17:00:00 +0300
+
+network-manager-vless (0.3.0) unstable; urgency=medium
+
+  * Add subscriptions (https:// URLs) from the GNOME Settings editor.
+  * Update each subscription at the interval requested by the provider.
+  * Warn about other tunnels and system proxies that bypass the VPN.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Mon, 28 Sep 2026 15:00:00 +0300
+
+network-manager-vless (0.2.1) unstable; urgency=medium
+
+  * Fix starting Xray-core under NetworkManager: do not change the capability
+    bounding set, which needs CAP_SETPCAP that NetworkManager.service lacks.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Mon, 28 Sep 2026 13:00:00 +0300
+
+network-manager-vless (0.2.0) unstable; urgency=medium
+
+  * GNOME Settings editor with import from vless:// links.
+  * Package with a bundled, verified Xray-core.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Mon, 28 Sep 2026 12:00:00 +0300

@@ -1,0 +1,46 @@
+Source: network-manager-vless
+Section: net
+Priority: optional
+Maintainer: Sevan A. <42666637+s11va9@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ meson (>= 1.1),
+ ninja-build,
+ pkgconf,
+ libnm-dev (>= 1.24),
+ libgtk-4-dev (>= 4.6),
+ libglib2.0-dev (>= 2.70),
+ gettext,
+ curl,
+ unzip,
+ ca-certificates,
+ python3 (>= 3.11),
+ python3-gi,
+ gir1.2-nm-1.0,
+ python3-pytest,
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+
+Package: network-manager-vless
+Architecture: amd64 arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ network-manager (>= 1.24),
+ python3 (>= 3.11),
+ python3-gi,
+ gir1.2-nm-1.0,
+ util-linux,
+ systemd | systemd-standalone-sysusers | systemd-sysusers,
+Recommends: gnome-control-center
+Description: NetworkManager VPN plugin for VLESS (Xray)
+ Adds VLESS connections to NetworkManager. Servers appear in GNOME Settings
+ and in the Quick Settings menu like any other VPN and can be controlled with
+ nmcli.
+ .
+ Supports TCP (with XTLS Vision), XHTTP, WebSocket, HTTPUpgrade and gRPC with
+ TLS or REALITY, a full tunnel for IPv4 and IPv6, import of vless:// links and
+ automatically updated subscriptions.
+ .
+ The package includes a verified build of Xray-core, which runs as an
+ unprivileged user.

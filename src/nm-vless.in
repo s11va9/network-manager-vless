@@ -1,0 +1,9 @@
+#!@PYTHON@ -I
+# SPDX-License-Identifier: GPL-2.0-or-later
+import sys
+
+sys.path.insert(1, "@PKGDATADIR@")
+
+from nm_vless.cli import main  # noqa: E402
+
+sys.exit(main())

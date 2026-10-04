@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# While a VLESS connection is up, turns off a GNOME system proxy that points to
+# another client's local proxy (127.0.0.1:…), and restores it afterwards.
+# Disable with: systemctl --user disable --now nm-vless-proxy-guard.service
+[Unit]
+Description=Keep other VPN clients' system proxy off while VLESS is connected
+Documentation=file://@DOCDIR@/README.md
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=@BINDIR@/nm-vless proxy-guard
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=graphical-session.target

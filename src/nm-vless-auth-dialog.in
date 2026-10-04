@@ -1,0 +1,10 @@
+#!@PYTHON@ -I
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Started by secret agents (GNOME Shell) when NetworkManager needs VPN secrets.
+import sys
+
+sys.path.insert(1, "@PKGDATADIR@")
+
+from nm_vless.auth_dialog import main  # noqa: E402
+
+sys.exit(main())

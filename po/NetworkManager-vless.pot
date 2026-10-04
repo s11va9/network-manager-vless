@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the NetworkManager-vless package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-vless 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-03 21:48+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: src/editor/nm-vless-dialog.ui:61
+msgid "Import from link"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:72
+msgid "Paste a vless:// link or an https:// subscription URL"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:78 src/editor/nm-vless-editor.c:479
+msgid "Fill In"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:101
+msgid "Server"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:111
+msgid "_Address"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:120
+msgid "vpn.example.com"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:130
+msgid "_Port"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:149
+msgid "_User ID"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:159
+msgid "UUID"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:174
+msgid "Security"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:184
+msgid "_Security"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:202
+msgid "Server _name (SNI)"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:211 src/editor/nm-vless-dialog.ui:380
+msgid "Same as the address"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:221
+msgid "_Fingerprint"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:239
+msgid "A_LPN"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:258
+msgid "Public _key"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:276
+msgid "Short _ID"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:295
+msgid "Spider _X"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:310
+msgid "Use XTLS _Vision"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:324
+msgid "Transport"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:334
+msgid "_Transport"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:352
+msgid "Pat_h"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:371
+msgid "H_ost"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:390
+msgid "Service _name"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:408
+msgid "gRPC _mode"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:426
+msgid "XHTTP _mode"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:444
+msgid "_Extra (JSON)"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:464
+msgid "Advanced"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:475
+msgid "En_cryption"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:494
+msgid "_MTU"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:513
+msgid "_DNS servers"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:529
+msgid "Route _IPv6 through the tunnel"
+msgstr ""
+
+#: src/editor/nm-vless-dialog.ui:539
+msgid "IPv6 DN_S servers"
+msgstr ""
+
+#: src/editor/nm-vless-editor-plugin.c:81
+msgid "The VLESS editor requires GTK 4. Use GNOME Settings or nm-vless."
+msgstr ""
+
+#: src/editor/nm-vless-editor-plugin.c:95
+#: src/editor/nm-vless-editor-plugin.c:103
+#, c-format
+msgid "Cannot load the VLESS editor: %s"
+msgstr ""
+
+#: src/editor/nm-vless-editor-plugin.c:135
+msgid "The file does not contain a vless:// link."
+msgstr ""
+
+#: src/editor/nm-vless-editor-plugin.c:149
+msgid "VLESS (Xray)"
+msgstr ""
+
+#: src/editor/nm-vless-editor-plugin.c:153
+msgid ""
+"Connect to VLESS servers with TLS or REALITY over TCP, XHTTP, WebSocket, "
+"HTTPUpgrade or gRPC."
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:25
+msgid "None"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:41
+msgid "Default"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:50
+msgid "Random"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:51
+msgid "Randomized"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:56
+msgid "Default (gun)"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:63
+msgid "Default (auto)"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:373
+#, c-format
+msgid "Cannot use this link: %s"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:382
+#, c-format
+msgid "Filled in from “%s”."
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:404
+#, c-format
+msgid "Cannot add the subscription: %s"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:415
+#, c-format
+msgid ""
+"Subscription “%s” added: %d server is now in the VPN list and will be "
+"updated automatically. You can close this dialog."
+msgid_plural ""
+"Subscription “%s” added: %d servers are now in the VPN list and will be "
+"updated automatically. You can close this dialog."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/editor/nm-vless-editor.c:455
+msgid "Reading the link…"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:460
+msgid "Downloading the subscription…"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:479
+msgid "Add Subscription"
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:549
+msgid "The server address is required."
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:551
+msgid "The user ID is required."
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:553
+msgid "REALITY requires a server name (SNI)."
+msgstr ""
+
+#: src/editor/nm-vless-editor.c:555
+msgid "REALITY requires a public key."
+msgstr ""
+
+#: src/nm_vless/auth_dialog.py:100
+msgid "Authenticate VPN"
+msgstr ""
+
+#: src/nm_vless/auth_dialog.py:102
+#, python-brace-format
+msgid "Enter the VLESS user ID for “{name}”."
+msgstr ""
+
+#: src/nm_vless/auth_dialog.py:105
+msgid "User ID"
+msgstr ""
+
+#: src/nm_vless/proxyguard.py:144
+msgid "System proxy turned off"
+msgstr ""
+
+#: src/nm_vless/proxyguard.py:146
+#, python-brace-format
+msgid ""
+"The system proxy {proxy} belongs to another VPN client and would bypass "
+"VLESS. It is turned back on when VLESS disconnects."
+msgstr ""

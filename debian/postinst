@@ -1,0 +1,12 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-or-later
+set -e
+
+if [ "$1" = "configure" ]; then
+    # Unprivileged account that runs Xray-core.
+    systemd-sysusers /usr/lib/sysusers.d/nm-vless.conf
+fi
+
+#DEBHELPER#
+
+exit 0

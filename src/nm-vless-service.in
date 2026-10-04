@@ -1,0 +1,10 @@
+#!@PYTHON@ -I
+# SPDX-License-Identifier: GPL-2.0-or-later
+# NetworkManager starts this program as root; -I ignores PYTHON* variables and user site-packages.
+import sys
+
+sys.path.insert(1, "@PKGDATADIR@")
+
+from nm_vless.service import main  # noqa: E402
+
+sys.exit(main())

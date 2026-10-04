@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+# SPDX-License-Identifier: GPL-2.0-or-later
+include /usr/share/dpkg/architecture.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+XRAY_DIR = $(CURDIR)/debian/xray-bundle
+
+%:
+	dh $@ --buildsystem=meson
+
+override_dh_auto_configure:
+	build-aux/fetch-xray.sh $(DEB_HOST_ARCH) $(XRAY_DIR)
+	dh_auto_configure -- \
+		-Deditor=enabled \
+		-Dpython=/usr/bin/python3 \
+		-Dbundled_xray=$(XRAY_DIR)/xray \
+		-Dsysusers_dir=/usr/lib/sysusers.d \
+		-Dsystemd_user_unit_dir=/usr/lib/systemd/user \
+		-Ddocdir=/usr/share/doc/network-manager-vless
+
+override_dh_auto_install:
+	dh_auto_install
+	install -D -m 0644 $(XRAY_DIR)/xray-LICENSE \
+		debian/network-manager-vless/usr/share/doc/network-manager-vless/xray-LICENSE
+
+# Keep the bundled Xray-core byte-identical to the verified upstream release.
+override_dh_strip:
+	dh_strip --exclude=nm-vless/xray
+
+override_dh_dwz:
+	dh_dwz --exclude=nm-vless/xray
+
+override_dh_installsystemduser:
+	dh_installsystemduser --name=nm-vless-subscriptions nm-vless-subscriptions.timer
+	dh_installsystemduser --name=nm-vless-proxy-guard nm-vless-proxy-guard.service

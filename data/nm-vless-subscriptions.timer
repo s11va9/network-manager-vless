@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Runs hourly; each subscription is only downloaded when its own update interval
+# (profile-update-interval from the provider, 6 hours by default) has passed.
+[Unit]
+Description=Update VLESS subscriptions for NetworkManager
+
+[Timer]
+OnStartupSec=2min
+OnUnitActiveSec=1h
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

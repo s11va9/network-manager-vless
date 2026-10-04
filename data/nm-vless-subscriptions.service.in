@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+[Unit]
+Description=Update VLESS subscriptions for NetworkManager
+Documentation=file://@DOCDIR@/README.md
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=@BINDIR@/nm-vless subscription update --due --quiet

@@ -1,0 +1,11 @@
+[VPN Connection]
+name=vless
+service=org.freedesktop.NetworkManager.vless
+program=@LIBEXECDIR@/nm-vless-service
+supports-multiple-connections=true
+
+[GNOME]
+auth-dialog=@LIBEXECDIR@/nm-vless-auth-dialog
+supports-external-ui-mode=true
+supports-hints=false
+@LIBNM_SECTION@

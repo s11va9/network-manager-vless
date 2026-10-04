@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
+<interface domain="NetworkManager-vless">
+  <requires lib="gtk" version="4.6"/>
+
+  <object class="GtkSizeGroup" id="labels">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="address_label"/>
+      <widget name="port_label"/>
+      <widget name="uuid_label"/>
+      <widget name="security_label"/>
+      <widget name="sni_label"/>
+      <widget name="fingerprint_label"/>
+      <widget name="alpn_label"/>
+      <widget name="public_key_label"/>
+      <widget name="short_id_label"/>
+      <widget name="spider_x_label"/>
+      <widget name="network_label"/>
+      <widget name="path_label"/>
+      <widget name="host_label"/>
+      <widget name="service_name_label"/>
+      <widget name="grpc_mode_label"/>
+      <widget name="xhttp_mode_label"/>
+      <widget name="xhttp_extra_label"/>
+      <widget name="encryption_label"/>
+      <widget name="mtu_label"/>
+      <widget name="dns_label"/>
+      <widget name="dns6_label"/>
+    </widgets>
+  </object>
+
+  <object class="GtkAdjustment" id="port_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">65535</property>
+    <property name="value">443</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">100</property>
+  </object>
+  <object class="GtkAdjustment" id="mtu_adjustment">
+    <property name="lower">576</property>
+    <property name="upper">9000</property>
+    <property name="value">1500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">100</property>
+  </object>
+
+  <object class="GtkBox" id="vless_root">
+    <property name="orientation">vertical</property>
+    <property name="spacing">18</property>
+    <property name="margin-top">6</property>
+    <property name="margin-bottom">6</property>
+
+    <!-- Import from link -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Import from link</property>
+            <property name="xalign">0</property>
+            <style><class name="heading"/></style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkEntry" id="link_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text" translatable="yes">Paste a vless:// link or an https:// subscription URL</property>
+                <property name="input-purpose">url</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="link_button">
+                <property name="label" translatable="yes">Fill In</property>
+                <property name="sensitive">False</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="link_status">
+            <property name="xalign">0</property>
+            <property name="wrap">True</property>
+            <property name="visible">False</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Server -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Server</property>
+            <property name="xalign">0</property>
+            <style><class name="heading"/></style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="address_label">
+                <property name="label" translatable="yes">_Address</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">address_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="address_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text" translatable="yes">vpn.example.com</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="port_label">
+                <property name="label" translatable="yes">_Port</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">port_spin</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="port_spin">
+                <property name="adjustment">port_adjustment</property>
+                <property name="numeric">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="uuid_label">
+                <property name="label" translatable="yes">_User ID</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">uuid_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkPasswordEntry" id="uuid_entry">
+                <property name="hexpand">True</property>
+                <property name="show-peek-icon">True</property>
+                <property name="placeholder-text" translatable="yes">UUID</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Security -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Security</property>
+            <property name="xalign">0</property>
+            <style><class name="heading"/></style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="security_label">
+                <property name="label" translatable="yes">_Security</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">security_dropdown</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="security_dropdown">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="sni_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="sni_label">
+                <property name="label" translatable="yes">Server _name (SNI)</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">sni_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="sni_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text" translatable="yes">Same as the address</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="fingerprint_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="fingerprint_label">
+                <property name="label" translatable="yes">_Fingerprint</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">fingerprint_dropdown</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="fingerprint_dropdown">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="alpn_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="alpn_label">
+                <property name="label" translatable="yes">A_LPN</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">alpn_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="alpn_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text">h2,http/1.1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="public_key_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="public_key_label">
+                <property name="label" translatable="yes">Public _key</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">public_key_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="public_key_entry">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="short_id_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="short_id_label">
+                <property name="label" translatable="yes">Short _ID</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">short_id_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="short_id_entry">
+                <property name="hexpand">True</property>
+                <property name="max-length">16</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="spider_x_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="spider_x_label">
+                <property name="label" translatable="yes">Spider _X</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">spider_x_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="spider_x_entry">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="flow_check">
+            <property name="label" translatable="yes">Use XTLS _Vision</property>
+            <property name="use-underline">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Transport -->
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Transport</property>
+            <property name="xalign">0</property>
+            <style><class name="heading"/></style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="network_label">
+                <property name="label" translatable="yes">_Transport</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">network_dropdown</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="network_dropdown">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="path_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="path_label">
+                <property name="label" translatable="yes">Pat_h</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">path_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="path_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text">/</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="host_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="host_label">
+                <property name="label" translatable="yes">H_ost</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">host_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="host_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text" translatable="yes">Same as the address</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="service_name_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="service_name_label">
+                <property name="label" translatable="yes">Service _name</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">service_name_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="service_name_entry">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="grpc_mode_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="grpc_mode_label">
+                <property name="label" translatable="yes">gRPC _mode</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">grpc_mode_dropdown</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="grpc_mode_dropdown">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="xhttp_mode_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="xhttp_mode_label">
+                <property name="label" translatable="yes">XHTTP _mode</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">xhttp_mode_dropdown</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="xhttp_mode_dropdown">
+                <property name="hexpand">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="xhttp_extra_row">
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="xhttp_extra_label">
+                <property name="label" translatable="yes">_Extra (JSON)</property>
+                <property name="use-underline">True</property>
+                <property name="mnemonic-widget">xhttp_extra_entry</property>
+                <property name="xalign">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="xhttp_extra_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text">{}</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Advanced -->
+    <child>
+      <object class="GtkExpander" id="advanced_expander">
+        <property name="label" translatable="yes">Advanced</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <property name="margin-top">6</property>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="encryption_label">
+                    <property name="label" translatable="yes">En_cryption</property>
+                    <property name="use-underline">True</property>
+                    <property name="mnemonic-widget">encryption_entry</property>
+                    <property name="xalign">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="encryption_entry">
+                    <property name="hexpand">True</property>
+                    <property name="placeholder-text">none</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="mtu_label">
+                    <property name="label" translatable="yes">_MTU</property>
+                    <property name="use-underline">True</property>
+                    <property name="mnemonic-widget">mtu_spin</property>
+                    <property name="xalign">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="mtu_spin">
+                    <property name="adjustment">mtu_adjustment</property>
+                    <property name="numeric">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="dns_label">
+                    <property name="label" translatable="yes">_DNS servers</property>
+                    <property name="use-underline">True</property>
+                    <property name="mnemonic-widget">dns_entry</property>
+                    <property name="xalign">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="dns_entry">
+                    <property name="hexpand">True</property>
+                    <property name="placeholder-text">1.1.1.1, 1.0.0.1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="ipv6_check">
+                <property name="label" translatable="yes">Route _IPv6 through the tunnel</property>
+                <property name="use-underline">True</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="dns6_row">
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="dns6_label">
+                    <property name="label" translatable="yes">IPv6 DN_S servers</property>
+                    <property name="use-underline">True</property>
+                    <property name="mnemonic-widget">dns6_entry</property>
+                    <property name="xalign">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="dns6_entry">
+                    <property name="hexpand">True</property>
+                    <property name="placeholder-text">2606:4700:4700::1111, 2606:4700:4700::1001</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

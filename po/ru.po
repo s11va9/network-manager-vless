@@ -1,0 +1,285 @@
+# Russian translation of NetworkManager-vless.
+# SPDX-License-Identifier: GPL-2.0-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-vless 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-03 21:48+0700\n"
+"PO-Revision-Date: 2026-09-28 00:00+0000\n"
+"Last-Translator: NetworkManager-vless contributors\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/editor/nm-vless-dialog.ui:61
+msgid "Import from link"
+msgstr "Импорт из ссылки"
+
+#: src/editor/nm-vless-dialog.ui:72
+msgid "Paste a vless:// link or an https:// subscription URL"
+msgstr "Вставьте ссылку vless:// или адрес подписки https://"
+
+#: src/editor/nm-vless-dialog.ui:78 src/editor/nm-vless-editor.c:479
+msgid "Fill In"
+msgstr "Заполнить"
+
+#: src/editor/nm-vless-dialog.ui:101
+msgid "Server"
+msgstr "Сервер"
+
+#: src/editor/nm-vless-dialog.ui:111
+msgid "_Address"
+msgstr "_Адрес"
+
+#: src/editor/nm-vless-dialog.ui:120
+msgid "vpn.example.com"
+msgstr "vpn.example.com"
+
+#: src/editor/nm-vless-dialog.ui:130
+msgid "_Port"
+msgstr "_Порт"
+
+#: src/editor/nm-vless-dialog.ui:149
+msgid "_User ID"
+msgstr "_ID пользователя"
+
+#: src/editor/nm-vless-dialog.ui:159
+msgid "UUID"
+msgstr "UUID"
+
+#: src/editor/nm-vless-dialog.ui:174
+msgid "Security"
+msgstr "Защита"
+
+#: src/editor/nm-vless-dialog.ui:184
+msgid "_Security"
+msgstr "_Защита"
+
+#: src/editor/nm-vless-dialog.ui:202
+msgid "Server _name (SNI)"
+msgstr "_Имя сервера (SNI)"
+
+#: src/editor/nm-vless-dialog.ui:211 src/editor/nm-vless-dialog.ui:380
+msgid "Same as the address"
+msgstr "Как адрес сервера"
+
+#: src/editor/nm-vless-dialog.ui:221
+msgid "_Fingerprint"
+msgstr "_Отпечаток TLS"
+
+#: src/editor/nm-vless-dialog.ui:239
+msgid "A_LPN"
+msgstr "A_LPN"
+
+#: src/editor/nm-vless-dialog.ui:258
+msgid "Public _key"
+msgstr "Открытый _ключ"
+
+#: src/editor/nm-vless-dialog.ui:276
+msgid "Short _ID"
+msgstr "Short _ID"
+
+#: src/editor/nm-vless-dialog.ui:295
+msgid "Spider _X"
+msgstr "Spider _X"
+
+#: src/editor/nm-vless-dialog.ui:310
+msgid "Use XTLS _Vision"
+msgstr "Использовать XTLS _Vision"
+
+#: src/editor/nm-vless-dialog.ui:324
+msgid "Transport"
+msgstr "Транспорт"
+
+#: src/editor/nm-vless-dialog.ui:334
+msgid "_Transport"
+msgstr "_Транспорт"
+
+#: src/editor/nm-vless-dialog.ui:352
+msgid "Pat_h"
+msgstr "П_уть"
+
+#: src/editor/nm-vless-dialog.ui:371
+msgid "H_ost"
+msgstr "_Хост"
+
+#: src/editor/nm-vless-dialog.ui:390
+msgid "Service _name"
+msgstr "_Имя сервиса"
+
+#: src/editor/nm-vless-dialog.ui:408
+msgid "gRPC _mode"
+msgstr "_Режим gRPC"
+
+#: src/editor/nm-vless-dialog.ui:426
+msgid "XHTTP _mode"
+msgstr "_Режим XHTTP"
+
+#: src/editor/nm-vless-dialog.ui:444
+msgid "_Extra (JSON)"
+msgstr "_Доп. параметры (JSON)"
+
+#: src/editor/nm-vless-dialog.ui:464
+msgid "Advanced"
+msgstr "Дополнительно"
+
+#: src/editor/nm-vless-dialog.ui:475
+msgid "En_cryption"
+msgstr "_Шифрование"
+
+#: src/editor/nm-vless-dialog.ui:494
+msgid "_MTU"
+msgstr "_MTU"
+
+#: src/editor/nm-vless-dialog.ui:513
+msgid "_DNS servers"
+msgstr "_DNS-серверы"
+
+#: src/editor/nm-vless-dialog.ui:529
+msgid "Route _IPv6 through the tunnel"
+msgstr "Направлять _IPv6 через туннель"
+
+#: src/editor/nm-vless-dialog.ui:539
+msgid "IPv6 DN_S servers"
+msgstr "DNS-серверы IPv_6"
+
+#: src/editor/nm-vless-editor-plugin.c:81
+msgid "The VLESS editor requires GTK 4. Use GNOME Settings or nm-vless."
+msgstr "Редактору VLESS нужен GTK 4. Используйте Настройки GNOME или nm-vless."
+
+#: src/editor/nm-vless-editor-plugin.c:95
+#: src/editor/nm-vless-editor-plugin.c:103
+#, c-format
+msgid "Cannot load the VLESS editor: %s"
+msgstr "Не удалось загрузить редактор VLESS: %s"
+
+#: src/editor/nm-vless-editor-plugin.c:135
+msgid "The file does not contain a vless:// link."
+msgstr "В файле нет ссылки vless://."
+
+#: src/editor/nm-vless-editor-plugin.c:149
+msgid "VLESS (Xray)"
+msgstr "VLESS (Xray)"
+
+#: src/editor/nm-vless-editor-plugin.c:153
+msgid ""
+"Connect to VLESS servers with TLS or REALITY over TCP, XHTTP, WebSocket, "
+"HTTPUpgrade or gRPC."
+msgstr ""
+"Подключение к серверам VLESS с TLS или REALITY через TCP, XHTTP, WebSocket, "
+"HTTPUpgrade или gRPC."
+
+#: src/editor/nm-vless-editor.c:25
+msgid "None"
+msgstr "Нет"
+
+#: src/editor/nm-vless-editor.c:41
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/editor/nm-vless-editor.c:50
+msgid "Random"
+msgstr "Случайный"
+
+#: src/editor/nm-vless-editor.c:51
+msgid "Randomized"
+msgstr "Рандомизированный"
+
+#: src/editor/nm-vless-editor.c:56
+msgid "Default (gun)"
+msgstr "По умолчанию (gun)"
+
+#: src/editor/nm-vless-editor.c:63
+msgid "Default (auto)"
+msgstr "По умолчанию (auto)"
+
+#: src/editor/nm-vless-editor.c:373
+#, c-format
+msgid "Cannot use this link: %s"
+msgstr "Не удалось использовать ссылку: %s"
+
+#: src/editor/nm-vless-editor.c:382
+#, c-format
+msgid "Filled in from “%s”."
+msgstr "Заполнено из «%s»."
+
+#: src/editor/nm-vless-editor.c:404
+#, c-format
+msgid "Cannot add the subscription: %s"
+msgstr "Не удалось добавить подписку: %s"
+
+#: src/editor/nm-vless-editor.c:415
+#, c-format
+msgid ""
+"Subscription “%s” added: %d server is now in the VPN list and will be "
+"updated automatically. You can close this dialog."
+msgid_plural ""
+"Subscription “%s” added: %d servers are now in the VPN list and will be "
+"updated automatically. You can close this dialog."
+msgstr[0] ""
+"Подписка «%s» добавлена: %d сервер уже в списке VPN и будет обновляться "
+"автоматически. Это окно можно закрыть."
+msgstr[1] ""
+"Подписка «%s» добавлена: %d сервера уже в списке VPN и будут обновляться "
+"автоматически. Это окно можно закрыть."
+msgstr[2] ""
+"Подписка «%s» добавлена: %d серверов уже в списке VPN и будут обновляться "
+"автоматически. Это окно можно закрыть."
+
+#: src/editor/nm-vless-editor.c:455
+msgid "Reading the link…"
+msgstr "Чтение ссылки…"
+
+#: src/editor/nm-vless-editor.c:460
+msgid "Downloading the subscription…"
+msgstr "Загрузка подписки…"
+
+#: src/editor/nm-vless-editor.c:479
+msgid "Add Subscription"
+msgstr "Добавить подписку"
+
+#: src/editor/nm-vless-editor.c:549
+msgid "The server address is required."
+msgstr "Укажите адрес сервера."
+
+#: src/editor/nm-vless-editor.c:551
+msgid "The user ID is required."
+msgstr "Укажите ID пользователя."
+
+#: src/editor/nm-vless-editor.c:553
+msgid "REALITY requires a server name (SNI)."
+msgstr "Для REALITY нужно имя сервера (SNI)."
+
+#: src/editor/nm-vless-editor.c:555
+msgid "REALITY requires a public key."
+msgstr "Для REALITY нужен открытый ключ."
+
+#: src/nm_vless/auth_dialog.py:100
+msgid "Authenticate VPN"
+msgstr "Аутентификация VPN"
+
+#: src/nm_vless/auth_dialog.py:102
+#, python-brace-format
+msgid "Enter the VLESS user ID for “{name}”."
+msgstr "Введите ID пользователя VLESS для «{name}»."
+
+#: src/nm_vless/auth_dialog.py:105
+msgid "User ID"
+msgstr "ID пользователя"
+
+#: src/nm_vless/proxyguard.py:144
+msgid "System proxy turned off"
+msgstr "Системный прокси выключен"
+
+#: src/nm_vless/proxyguard.py:146
+#, python-brace-format
+msgid ""
+"The system proxy {proxy} belongs to another VPN client and would bypass "
+"VLESS. It is turned back on when VLESS disconnects."
+msgstr ""
+"Системный прокси {proxy} принадлежит другому VPN-клиенту, и трафик шёл бы "
+"мимо VLESS. Он снова включится, когда VLESS отключится."

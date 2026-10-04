@@ -1,0 +1,16 @@
+option('python', type: 'string', value: '/usr/bin/python3',
+  description: 'Python interpreter with PyGObject used by the installed programs')
+option('nm_vpn_dir', type: 'string', value: '',
+  description: 'NetworkManager VPN plugin directory (default: /usr/lib/NetworkManager/VPN)')
+option('dbus_policy_dir', type: 'string', value: '/usr/share/dbus-1/system.d',
+  description: 'D-Bus system bus policy directory')
+option('sysusers_dir', type: 'string', value: '',
+  description: 'systemd sysusers.d directory (default: from systemd, else /usr/lib/sysusers.d)')
+option('systemd_user_unit_dir', type: 'string', value: '',
+  description: 'systemd user unit directory (default: from systemd, else /usr/lib/systemd/user)')
+option('editor', type: 'feature', value: 'auto',
+  description: 'Build the GNOME Settings editor (needs libnm and GTK 4 development files)')
+option('bundled_xray', type: 'string', value: '',
+  description: 'Path of a verified xray binary to install as libexecdir/nm-vless/xray (used by packages)')
+option('docdir', type: 'string', value: '',
+  description: 'Documentation directory (default: datadir/doc/NetworkManager-vless)')

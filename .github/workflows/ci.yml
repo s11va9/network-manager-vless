@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get build-dep -y .
+          sudo apt-get install --no-install-recommends -y python3-venv libgtk-4-bin dbus
+
+      - name: Lint and type check
+        run: make lint typecheck
+
+      - name: Build
+        run: |
+          .venv/bin/meson setup build --prefix=/usr -Deditor=enabled
+          .venv/bin/meson compile -C build
+
+      - name: Test (editor on a headless Broadway display, pinned Xray-core)
+        run: |
+          build-aux/fetch-xray.sh amd64 "$RUNNER_TEMP/xray"
+          gtk4-broadwayd :5 &
+          GDK_BACKEND=broadway BROADWAY_DISPLAY=:5 \
+          NM_VLESS_TEST_XRAY="$RUNNER_TEMP/xray/xray" \
+          NM_VLESS_BUILD_DIR="$PWD/build" \
+            .venv/bin/pytest -ra
+
+      - name: Staged install
+        run: |
+          .venv/bin/meson install -C build --destdir "$PWD/stage"
+          test -x stage/usr/libexec/nm-vless-service
+          grep -q '^\[libnm\]' stage/usr/lib/NetworkManager/VPN/nm-vless-service.name
