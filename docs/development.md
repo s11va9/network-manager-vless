@@ -60,7 +60,7 @@ src/editor/         GNOME Settings plugins (C, GTK 4)
   nm-vless-common.[ch]       keys and "nm-vless parse-link" helper
 po/                 translations of the editor
 debian/             Debian/Ubuntu packaging
-build-aux/          fetch-xray.sh, xray.lock, build-deb.sh
+build-aux/          fetch-xray.sh, xray.lock, build-deb.sh, release-notes.sh
 src/nm_vless/
   link.py          vless:// parsing and formatting, VlessServer validation
   settings.py      VlessServer <-> vpn.data / vpn.secrets, tunnel options
@@ -125,7 +125,9 @@ user-writable source tree: that code runs as root.
    `CHANGELOG.md` under the new version.
 2. `make check` and the manual end-to-end test above.
 3. Push a tag `vX.Y.Z`. The *Release* workflow builds the `.deb` for amd64 and arm64
-   and publishes them with `SHA256SUMS` as a GitHub release.
+   and publishes them with `SHA256SUMS` as a GitHub release. The description is made by
+   `build-aux/release-notes.sh X.Y.Z` (installation instructions and the
+   `CHANGELOG.md` section of the version); run it before tagging to check it.
 
 To update the bundled Xray-core, change `version` and both checksums in
 `build-aux/xray.lock` (take them from the release's `.dgst` files) and run the

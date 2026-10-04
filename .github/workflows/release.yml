@@ -44,6 +44,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           path: dist
@@ -53,7 +55,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          build-aux/release-notes.sh "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/notes.md"
           cd dist
           sha256sum *.deb > SHA256SUMS
           gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
-            --title "$GITHUB_REF_NAME" --generate-notes *.deb SHA256SUMS
+            --title "NetworkManager-vless ${GITHUB_REF_NAME#v}" \
+            --notes-file "$RUNNER_TEMP/notes.md" *.deb SHA256SUMS

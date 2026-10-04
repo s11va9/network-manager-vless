@@ -1,5 +1,10 @@
 # NetworkManager-vless
 
+[![CI](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml/badge.svg)](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/s11va9/network-manager-vless)](https://github.com/s11va9/network-manager-vless/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/s11va9/network-manager-vless/total)](https://github.com/s11va9/network-manager-vless/releases)
+[![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)
+
 A [NetworkManager](https://networkmanager.dev/) VPN plugin for **VLESS** connections,
 powered by [Xray-core](https://github.com/XTLS/Xray-core).
 
@@ -7,6 +12,7 @@ VLESS servers become ordinary VPN connections: add them in GNOME Settings, switc
 on and off in Quick Settings next to Wi-Fi and control them with `nmcli`. Routes, DNS
 and reconnects are handled by NetworkManager like for any other VPN.
 
+**[Download the latest release](../../releases/latest)** · [Installation](#installation) ·
 [Русская версия](README.ru.md)
 
 ## Features
@@ -61,8 +67,10 @@ opens the same editor later.
 
 **Subscriptions:** paste an `https://` subscription URL into the same field and click
 **Add Subscription**. Every server of the subscription becomes its own VPN connection
-and is kept up to date automatically; close the Add VPN dialog afterwards. A text file containing a link can also be imported with
-**Import from file…** in the Add VPN dialog.
+and is kept up to date automatically; close the Add VPN dialog afterwards.
+
+A text file containing a link can also be imported with **Import from file…** in the
+Add VPN dialog.
 
 ### Command line
 

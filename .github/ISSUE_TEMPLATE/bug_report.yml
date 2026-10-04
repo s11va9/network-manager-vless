@@ -1,0 +1,45 @@
+name: Bug report
+description: The plugin, the editor or a connection does not work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never post your `vless://` links, subscription URLs, user ids or server
+        addresses.** Replace them with `…` in commands and logs.
+        Problems with a single server or provider? Use the "Server or subscription"
+        template instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      placeholder: "0.5.0 (dpkg -s network-manager-vless | grep Version)"
+    validations:
+      required: true
+  - type: input
+    id: distro
+    attributes:
+      label: Distribution and desktop
+      placeholder: Ubuntu 24.04, GNOME 46
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: Output of `nm-vless check`
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: journal
+    attributes:
+      label: Log
+      description: "`journalctl -b -t nm-vless-service --since -15min`, with secrets removed."
+      render: text

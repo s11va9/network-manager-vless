@@ -1,5 +1,10 @@
 # NetworkManager-vless
 
+[![CI](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml/badge.svg)](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/s11va9/network-manager-vless)](https://github.com/s11va9/network-manager-vless/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/s11va9/network-manager-vless/total)](https://github.com/s11va9/network-manager-vless/releases)
+[![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)
+
 Плагин VPN для [NetworkManager](https://networkmanager.dev/), добавляющий подключения
 **VLESS** на базе [Xray-core](https://github.com/XTLS/Xray-core).
 
@@ -7,6 +12,7 @@
 GNOME, включаются в шторке рядом с Wi-Fi и управляются через `nmcli`. Маршруты, DNS и
 переподключение берёт на себя NetworkManager.
 
+**[Скачать последнюю версию](../../releases/latest)** · [Установка](#установка) ·
 [English version](README.md)
 
 ## Возможности

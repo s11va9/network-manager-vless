@@ -1,0 +1,50 @@
+name: Server or subscription
+description: A server or subscription works in another client but not here.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never post your `vless://` links, subscription URLs, user ids or server
+        addresses.** Describe the settings instead; they are listed below.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What does not work?
+      options:
+        - Connecting to a server
+        - Some sites or apps do not open while connected
+        - Adding or updating a subscription
+        - Importing a link
+    validations:
+      required: true
+  - type: input
+    id: transport
+    attributes:
+      label: Transport and security
+      description: From the link (`type=` and `security=`) or the editor.
+      placeholder: xhttp + tls, tcp + reality with xtls-rprx-vision, ws + tls, …
+    validations:
+      required: true
+  - type: input
+    id: other-client
+    attributes:
+      label: Client where it works
+      placeholder: Happ 2.x, v2rayN 7.x, Nekoray, …
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: Output of `nm-vless test "<connection>"`
+      description: Checks sites through the server without connecting the VPN.
+      render: text
+  - type: textarea
+    id: journal
+    attributes:
+      label: Log
+      description: "`journalctl -b -t nm-vless-service --since -15min`, with secrets removed."
+      render: text
