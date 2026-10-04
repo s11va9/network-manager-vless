@@ -15,6 +15,16 @@ and reconnects are handled by NetworkManager like for any other VPN.
 **[Download the latest release](../../releases/latest)** · [Installation](#installation) ·
 [Русская версия](README.ru.md)
 
+<p align="center">
+  <img src="docs/images/network-settings.png" width="520"
+       alt="VLESS connections with on/off switches in GNOME Settings → Network">
+</p>
+<p align="center">
+  <img src="docs/images/add-vpn.png" width="420" alt="VLESS (Xray) in the Add VPN dialog">
+  <img src="docs/images/editor.png" width="330"
+       alt="Connection editor with import from a vless:// link or subscription URL">
+</p>
+
 ## Features
 
 - **GNOME Settings integration**: "VLESS (Xray)" in the Add VPN dialog, an editor for
