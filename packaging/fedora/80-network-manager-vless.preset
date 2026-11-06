@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Match the DEB defaults; local administrators can override with an earlier preset.
+enable nm-vless-subscriptions.timer
+enable nm-vless-proxy-guard.service

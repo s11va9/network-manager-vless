@@ -1,0 +1,54 @@
+name: Native packages
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: ${{ matrix.target }} / ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        target: [ubuntu24.04, debian13, fedora44, fedora45]
+        arch: [amd64, arm64]
+        include:
+          - target: ubuntu24.04
+            image: ubuntu:24.04
+          - target: debian13
+            image: debian:13
+          - target: fedora44
+            image: registry.fedoraproject.org/fedora:44
+          - target: fedora45
+            image: registry.fedoraproject.org/fedora:45
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build, install, test editor and remove native package
+        env:
+          IMAGE: ${{ matrix.image }}
+          TARGET: ${{ matrix.target }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/packages"
+          docker run --rm --cpus=2 \
+            --mount "type=bind,source=$PWD,target=/src,readonly" \
+            --mount "type=bind,source=$RUNNER_TEMP/packages,target=/output" \
+            "$IMAGE" sh /src/build-aux/ci-package.sh "$TARGET"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.target }}-${{ matrix.arch }}
+          path: ${{ runner.temp }}/packages/*
+          if-no-files-found: error

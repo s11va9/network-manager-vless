@@ -156,8 +156,9 @@ def _fetch(proxy: str, url: str, timeout: float) -> tuple[UrlResult, bytes]:
     except urllib.error.HTTPError as exc:
         # The site answered through the tunnel, so any status means it is reachable;
         # for plain http:// the local proxy itself answers 503 if the server failed.
-        reached = request.type == "https" or exc.code not in _PROXY_ERRORS
-        return UrlResult(url, reached, f"HTTP {exc.code}", time.monotonic() - start), b""
+        with exc:
+            reached = request.type == "https" or exc.code not in _PROXY_ERRORS
+            return UrlResult(url, reached, f"HTTP {exc.code}", time.monotonic() - start), b""
     except urllib.error.URLError as exc:
         return UrlResult(url, False, str(exc.reason), time.monotonic() - start), b""
     except (TimeoutError, OSError) as exc:

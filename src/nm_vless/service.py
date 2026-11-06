@@ -41,6 +41,7 @@ gi.require_version("NM", "1.0")
 from gi.repository import NM, Gio, GLib
 
 from nm_vless import SERVICE_TYPE, __version__, diagnostics, settings, tun, vpnconfig, xray
+from nm_vless.glibcompat import unix_signal_add
 from nm_vless.link import VlessServer, is_ip_address
 
 LOG: Final = logging.getLogger("nm-vless")
@@ -575,7 +576,7 @@ def main(argv: list[str] | None = None) -> int:
         return False  # GLib.SOURCE_REMOVE
 
     for signum in (signal.SIGTERM, signal.SIGINT):
-        GLib.unix_signal_add(GLib.PRIORITY_HIGH, signum, on_signal)
+        unix_signal_add(GLib.PRIORITY_HIGH, signum, on_signal)
 
     LOG.debug("nm-vless-service %s ready as %s", __version__, args.bus_name)
     loop.run()

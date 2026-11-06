@@ -32,6 +32,7 @@ from gi.repository import NM, Gio, GLib
 
 from nm_vless import SERVICE_TYPE, diagnostics
 from nm_vless.buildinfo import translation
+from nm_vless.glibcompat import unix_signal_add
 
 __all__ = ["GnomeProxy", "ProxyGuard", "ProxySettings", "run"]
 
@@ -247,7 +248,7 @@ def run() -> int:
         return False  # GLib.SOURCE_REMOVE
 
     for signum in (signal.SIGTERM, signal.SIGINT):
-        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signum, quit_loop)
+        unix_signal_add(GLib.PRIORITY_DEFAULT, signum, quit_loop)
     loop.run()
     guard.stop()
     return 0

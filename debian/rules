@@ -23,6 +23,15 @@ override_dh_auto_install:
 	install -D -m 0644 $(XRAY_DIR)/xray-LICENSE \
 		debian/network-manager-vless/usr/share/doc/network-manager-vless/xray-LICENSE
 
+# dh_auto_test creates its own XDG_RUNTIME_DIR. Keep the existing Broadway socket
+# reachable by the test subprocess; do not let editor tests silently skip in CI.
+override_dh_auto_test:
+	if [ -n "$$NM_VLESS_BROADWAY_RUNTIME_DIR" ]; then \
+		dh_auto_test -- --wrapper="env XDG_RUNTIME_DIR=$$NM_VLESS_BROADWAY_RUNTIME_DIR"; \
+	else \
+		dh_auto_test; \
+	fi
+
 # Keep the bundled Xray-core byte-identical to the verified upstream release.
 override_dh_strip:
 	dh_strip --exclude=nm-vless/xray

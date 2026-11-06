@@ -134,8 +134,9 @@ def test_minimum_version_is_enforced(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_find_xray_prefers_environment(tmp_path: Path) -> None:
     fake = tmp_path / "xray"
     fake.write_text("#!/bin/sh\n")
-    fake.chmod(0o755)
-    # tmp_path is owned by the test user, so the ownership check must reject it.
+    fake.chmod(0o777)
+    # An unsafe explicit binary must be rejected rather than falling back to a
+    # system Xray. World-writable permissions make this independent of the test uid.
     with pytest.raises(xray.XrayError, match="owned by root"):
         xray.find_xray({xray.ENV_XRAY: str(fake)})
 

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import http.server
+import io
 import json
 import os
 import shutil
@@ -11,8 +12,12 @@ import socket
 import subprocess
 import threading
 import time
+import urllib.error
 from collections.abc import Iterator
+from email.message import Message
 from pathlib import Path
+from types import SimpleNamespace
+from typing import NoReturn
 
 import pytest
 
@@ -20,6 +25,24 @@ from nm_vless import probe
 from nm_vless.link import VlessServer
 
 from .conftest import TEST_UUID
+
+
+def test_probe_closes_http_error_response(monkeypatch: pytest.MonkeyPatch) -> None:
+    body = io.BytesIO(b"proxy upstream unavailable")
+    response = urllib.error.HTTPError("http://example.test", 503, "Unavailable", Message(), body)
+
+    def unavailable(*_args: object, **_kwargs: object) -> NoReturn:
+        raise response
+
+    monkeypatch.setattr(
+        "nm_vless.probe.urllib.request.build_opener",
+        lambda *_args: SimpleNamespace(open=unavailable),
+    )
+    result, content = probe._fetch("127.0.0.1:18080", "http://example.test", 1)
+    assert not result.ok
+    assert result.detail == "HTTP 503"
+    assert content == b""
+    assert body.closed
 
 
 def test_probe_config_replaces_the_tun_inbound(xhttp_server: VlessServer) -> None:

@@ -2,6 +2,9 @@ Source: network-manager-vless
 Section: net
 Priority: optional
 Maintainer: Sevan A. <42666637+s11va9@users.noreply.github.com>
+Homepage: https://github.com/s11va9/network-manager-vless
+Vcs-Git: https://github.com/s11va9/network-manager-vless.git
+Vcs-Browser: https://github.com/s11va9/network-manager-vless
 Build-Depends:
  debhelper-compat (= 13),
  meson (>= 1.1),
@@ -33,7 +36,7 @@ Depends:
  util-linux,
  systemd | systemd-standalone-sysusers | systemd-sysusers,
 Recommends: gnome-control-center
-Description: NetworkManager VPN plugin for VLESS (Xray)
+Description: VLESS VPN client for NetworkManager and GNOME Settings (Xray)
  Adds VLESS connections to NetworkManager. Servers appear in GNOME Settings
  and in the Quick Settings menu like any other VPN and can be controlled with
  nmcli.

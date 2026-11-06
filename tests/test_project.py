@@ -57,7 +57,10 @@ def test_cli_help_builds() -> None:
 
 def test_debian_changelog_matches_version() -> None:
     first = (ROOT / "debian" / "changelog").read_text().splitlines()[0]
-    assert f"({nm_vless.__version__})" in first
+    # Native builds append +deb13 / +ubuntu24.04 to the upstream version.
+    match = re.search(r"\(([^)]+)\)", first)
+    assert match is not None
+    assert match.group(1).split("+", 1)[0] == nm_vless.__version__
 
 
 def test_translations_are_complete() -> None:

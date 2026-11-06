@@ -8,6 +8,7 @@ import logging
 import logging.handlers
 import os
 import shutil
+import signal
 import subprocess
 import sys
 from pathlib import Path
@@ -79,7 +80,12 @@ def test_xray_accepts_tun_fd_and_cleans_up() -> None:
     assert result["tundev"].startswith("vless")
     assert result["tun_exists_while_connected"] is True
     assert result["tun_exists_after"] is False
-    assert "xray exited with status 0" in log
+    # The helper disconnects immediately after readiness. Xray may not yet have
+    # installed its own SIGTERM handler: either normal exit or SIGTERM is a clean
+    # stop, provided the TUN is gone and no SIGKILL/timeout was needed.
+    assert (
+        "xray exited with status 0" in log or f"xray killed by signal {int(signal.SIGTERM)}" in log
+    )
 
 
 @pytest.mark.skipif(

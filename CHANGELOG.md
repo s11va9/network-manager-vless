@@ -6,6 +6,25 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-07
+
+### Added
+
+- Native Debian 13 DEBs and Fedora 44/45 RPMs, alongside Ubuntu 24.04 DEBs.
+  All targets use the same sources and pinned, checksum-verified Xray-core.
+- Shared CI/release matrix for amd64/x86_64 and arm64/aarch64. Each package is built,
+  installed and removed in its own distribution; the installed GTK editor, CLI,
+  authentication helper and unprivileged Xray are smoke-tested before publication.
+- Distribution-specific DEB versions (`+ubuntu24.04` and `+deb13`) so release assets
+  cannot overwrite each other. Release notes include native installation commands.
+
+### Fixed
+
+- Close HTTP error responses in `nm-vless test`, including failures to reach an
+  upstream server. New Python versions exposed the previously leaked response.
+- Use the GLibUnix signal API on newer GLib, retaining compatibility with the
+  legacy API on older distributions.
+
 ## [0.5.0] - 2026-10-03
 
 ### Added

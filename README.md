@@ -1,12 +1,13 @@
-# NetworkManager-vless
+# NetworkManager-vless — VLESS VPN for Linux
 
 [![CI](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml/badge.svg)](https://github.com/s11va9/network-manager-vless/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/s11va9/network-manager-vless)](https://github.com/s11va9/network-manager-vless/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/s11va9/network-manager-vless/total)](https://github.com/s11va9/network-manager-vless/releases)
 [![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)
 
-A [NetworkManager](https://networkmanager.dev/) VPN plugin for **VLESS** connections,
-powered by [Xray-core](https://github.com/XTLS/Xray-core).
+A **VLESS VPN client for Ubuntu, Debian 13 and Fedora Workstation**, integrated with
+[NetworkManager](https://networkmanager.dev/) and **GNOME Settings**, powered by
+[Xray-core](https://github.com/XTLS/Xray-core). Supports **REALITY, XTLS Vision and XHTTP**.
 
 VLESS servers become ordinary VPN connections: add them in GNOME Settings, switch them
 on and off in Quick Settings next to Wi-Fi and control them with `nmcli`. Routes, DNS
@@ -38,25 +39,47 @@ and reconnects are handled by NetworkManager like for any other VPN.
 
 ## Installation
 
-Download the package for your architecture from the
-[latest release](../../releases/latest) (`amd64` for most PCs, `arm64` for ARM
-devices) and open it: on Ubuntu, double-clicking a `.deb` opens it in App Center.
-Alternatively, install it from a terminal, which also installs the dependencies:
+Choose the package for your **distribution and architecture** from the
+[latest release](../../releases/latest). Xray-core is already included; no source
+build or separate VPN application is needed.
+
+| Distribution | Package | Architectures |
+|---|---|---|
+| Ubuntu 24.04 | `*+ubuntu24.04_*.deb` | `amd64`, `arm64` |
+| Debian 13 (Trixie) | `*+deb13_*.deb` | `amd64`, `arm64` |
+| Fedora Workstation 44 | `*.fc44.*.rpm` | `x86_64`, `aarch64` |
+| Fedora Workstation 45 | `*.fc45.*.rpm` | `x86_64`, `aarch64` |
+
+`amd64` / `x86_64` is for Intel and AMD PCs; `arm64` / `aarch64` is for ARM.
+Open the downloaded package with your system's installer, or use the matching command:
 
 ```sh
-sudo apt install ./network-manager-vless_0.5.0_amd64.deb
+# Ubuntu 24.04
+sudo apt install ./network-manager-vless_0.6.0+ubuntu24.04_amd64.deb
+
+# Debian 13
+sudo apt install ./network-manager-vless_0.6.0+deb13_amd64.deb
+
+# Fedora Workstation 45 (use fc44 for Fedora 44)
+sudo dnf install ./NetworkManager-vless-0.6.0-1.fc45.x86_64.rpm
 ```
 
-That is all: NetworkManager picks up the plugin immediately, no reboot or
-configuration is needed. Supported: Ubuntu 24.04 or newer and other distributions with
-NetworkManager 1.24+, GTK 4.6+ and Python 3.11+.
+NetworkManager picks up the plugin without a reboot. If GNOME Settings was open during
+installation or an update, close it completely and reopen it: it caches the old plugin.
+`pkill -x gnome-control-c` also stops its background search process.
 
-If GNOME Settings was running during an installation or update, restart it: it keeps the
-previously loaded plugin in memory (also in the background, for the search in the
-Activities overview). `pkill -x gnome-control-c` stops it; the next start loads the new
-version.
+**Compatibility:** CI builds, tests, installs and removes packages on the distributions
+above, including a headless test of the installed GNOME editor. A real VPN connection
+on Fedora with SELinux enforcing still needs Workstation VM validation; Fedora support
+is experimental until that check is recorded. These packages target GNOME; a native
+KDE/Plasma editor and Debian 12 packages are not included. See
+[packaging and validation](docs/packaging.md).
 
-To remove it: `sudo apt remove network-manager-vless`.
+**Updates:** download a later release and install its package over the existing one;
+connections and subscriptions are retained. No APT/DNF repository is added.
+
+**Uninstall:** `sudo apt remove network-manager-vless` on Ubuntu/Debian, or
+`sudo dnf remove NetworkManager-vless` on Fedora.
 
 ## Usage
 
@@ -232,7 +255,7 @@ Settings.
 
 1. Routing rules (direct domestic traffic, geoip/geosite).
 2. Other protocols supported by Xray-core.
-3. An APT repository for automatic updates.
+3. An APT repository for package updates (deferred).
 
 ## Development
 

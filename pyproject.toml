@@ -26,7 +26,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "PLR2004", "S105", "S106", "S607", "E402"]
 # PyGObject requires the GI version to be pinned before importing from gi.repository.
-"src/nm_vless/{service,nmclient,vpnconfig,cli,auth_dialog,proxyguard}.py" = ["E402"]
+"src/nm_vless/{service,nmclient,vpnconfig,cli,auth_dialog,proxyguard,glibcompat}.py" = ["E402"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -52,4 +52,12 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = ["-ra", "--strict-markers", "--strict-config"]
 xfail_strict = true
-filterwarnings = ["error"]
+filterwarnings = [
+    "error",
+    # PyGObject's asyncio bridge still uses policy APIs deprecated on Python 3.15.
+    # Keep that dependency warning visible without failing our GTK tests; all other
+    # warnings (including resource leaks in our code) remain errors.
+    "default:'asyncio\\.(AbstractEventLoopPolicy|get_event_loop_policy|set_event_loop_policy)' is deprecated.*:DeprecationWarning:gi\\.events",
+    # Fedora 44's PyGObject deprecates this alias twice while loading GLib itself.
+    "default:GLib\\.unix_signal_add_full is deprecated; use GLibUnix\\.signal_add(_full)? instead:gi.PyGIDeprecationWarning:gi\\.overrides",
+]

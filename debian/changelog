@@ -1,3 +1,11 @@
+network-manager-vless (0.6.0) unstable; urgency=medium
+
+  * Build separate native packages for Ubuntu 24.04, Debian 13 and Fedora 44/45.
+  * Test package installation, the installed GTK editor, unprivileged Xray and
+    removal before publishing amd64/arm64 DEBs and x86_64/aarch64 RPMs.
+
+ -- Sevan A. <42666637+s11va9@users.noreply.github.com>  Sat, 07 Nov 2026 00:00:00 +0000
+
 network-manager-vless (0.5.0) unstable; urgency=medium
 
   * Turn off another client's local system proxy while VLESS is connected

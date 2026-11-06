@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: NetworkManager-vless
-Source: https://github.com/XTLS/Xray-core (bundled Xray-core)
+Source: https://github.com/s11va9/network-manager-vless
 
 Files: *
 Copyright: 2026 NetworkManager-vless contributors
@@ -13,7 +13,7 @@ Comment: Unmodified Xray-core release binary, downloaded and verified against th
  https://github.com/XTLS/Xray-core
 License: MPL-2.0
  The full license text is installed as
- /usr/share/doc/network-manager-vless/xray-LICENSE.
+ /usr/share/doc/network-manager-vless/xray-LICENSE.gz.
 
 License: GPL-2+
  This program is free software; you can redistribute it and/or modify it under

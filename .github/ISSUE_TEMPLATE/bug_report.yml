@@ -20,14 +20,15 @@ body:
     id: version
     attributes:
       label: Plugin version
-      placeholder: "0.5.0 (dpkg -s network-manager-vless | grep Version)"
+      description: "Use `dpkg-query -W network-manager-vless` or `rpm -q NetworkManager-vless`."
+      placeholder: "0.6.0+deb13 / 0.6.0-1.fc45"
     validations:
       required: true
   - type: input
     id: distro
     attributes:
       label: Distribution and desktop
-      placeholder: Ubuntu 24.04, GNOME 46
+      placeholder: "Debian 13 / Fedora Workstation 45 / Ubuntu 24.04; GNOME version"
     validations:
       required: true
   - type: textarea

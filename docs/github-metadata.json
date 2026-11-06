@@ -1,0 +1,23 @@
+{
+  "description": "VLESS VPN client for Linux with NetworkManager & GNOME Settings integration. Xray-core, REALITY, XHTTP and auto-updating subscriptions. DEB/RPM for Ubuntu, Debian & Fedora.",
+  "topics": [
+    "vless",
+    "vless-client",
+    "vpn",
+    "vpn-client",
+    "linux",
+    "networkmanager",
+    "networkmanager-vpn",
+    "gnome",
+    "xray",
+    "xray-core",
+    "reality",
+    "xtls",
+    "xhttp",
+    "ubuntu",
+    "debian",
+    "fedora",
+    "gtk4",
+    "subscriptions"
+  ]
+}

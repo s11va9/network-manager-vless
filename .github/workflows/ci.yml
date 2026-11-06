@@ -2,12 +2,21 @@ name: CI
 
 on:
   push:
+    branches: ["**"]
   pull_request:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  packages:
+    needs: check
+    uses: ./.github/workflows/packages.yml
+
   check:
     runs-on: ubuntu-24.04
     steps:
@@ -25,7 +34,7 @@ jobs:
       - name: Build
         run: |
           .venv/bin/meson setup build --prefix=/usr -Deditor=enabled
-          .venv/bin/meson compile -C build
+          .venv/bin/meson compile -C build -j2
 
       - name: Test (editor on a headless Broadway display, pinned Xray-core)
         run: |

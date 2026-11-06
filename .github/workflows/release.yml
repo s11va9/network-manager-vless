@@ -8,56 +8,40 @@ permissions:
   contents: read
 
 jobs:
-  deb:
-    strategy:
-      matrix:
-        include:
-          - arch: amd64
-            runner: ubuntu-24.04
-          - arch: arm64
-            runner: ubuntu-24.04-arm
-    runs-on: ${{ matrix.runner }}
+  version:
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get build-dep -y .
-
-      - name: Check that the tag matches the package version
+      - name: Check that the tag matches the upstream package version
         run: |
           version=$(dpkg-parsechangelog --show-field Version)
           test "v$version" = "$GITHUB_REF_NAME"
+          build-aux/release-notes.sh "$version" > /dev/null
 
-      - name: Build the package
-        run: build-aux/build-deb.sh
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: deb-${{ matrix.arch }}
-          path: dist/*.deb
+  packages:
+    needs: version
+    uses: ./.github/workflows/packages.yml
 
   publish:
-    needs: deb
+    needs: packages
     runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/download-artifact@v4
         with:
+          pattern: package-*
           path: dist
           merge-multiple: true
 
-      - name: Create the GitHub release
+      - name: Publish the tested DEB and RPM packages together
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           build-aux/release-notes.sh "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/notes.md"
           cd dist
-          sha256sum *.deb > SHA256SUMS
-          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+          sha256sum -- *.deb *.rpm > SHA256SUMS
+          gh release create "$GITHUB_REF_NAME" --verify-tag --repo "$GITHUB_REPOSITORY" \
             --title "NetworkManager-vless ${GITHUB_REF_NAME#v}" \
-            --notes-file "$RUNNER_TEMP/notes.md" *.deb SHA256SUMS
+            --notes-file "$RUNNER_TEMP/notes.md" *.deb *.rpm SHA256SUMS

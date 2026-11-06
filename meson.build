@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 project('NetworkManager-vless',
-  version: '0.5.0',
+  version: '0.6.0',
   license: 'GPL-2.0-or-later',
   meson_version: '>= 1.1.0',
   default_options: ['c_std=gnu11', 'warning_level=2', 'werror=false'],

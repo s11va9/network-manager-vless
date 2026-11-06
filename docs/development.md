@@ -14,7 +14,7 @@ Build and try the plugin:
 ```sh
 .venv/bin/meson setup build --prefix=/usr
 .venv/bin/meson compile -C build
-build-aux/build-deb.sh                # dist/network-manager-vless_<version>_<arch>.deb
+build-aux/build-deb.sh                # dist/network-manager-vless_<version>+<distro>_<arch>.deb
 sudo apt install ./dist/network-manager-vless_*.deb
 ```
 
@@ -22,6 +22,10 @@ Installing the package is the recommended way to test on a desktop: it puts ever
 where NetworkManager, D-Bus and GNOME Settings look for it. `build-deb.sh` downloads
 the Xray-core release pinned in `build-aux/xray.lock` and refuses it if the checksum
 does not match; set `XRAY_ZIP=/path/to/Xray-linux-64.zip` to build offline.
+
+For Fedora RPM builds and the Debian 13/Ubuntu/Fedora CI matrix, see
+[native packages](packaging.md). Fedora's enforcing-SELinux VM check is documented
+there separately from container build and installation tests.
 
 ## Tests
 
@@ -65,6 +69,7 @@ src/nm_vless/
   link.py          vless:// parsing and formatting, VlessServer validation
   settings.py      VlessServer <-> vpn.data / vpn.secrets, tunnel options
   xray.py          locating and checking xray, building its JSON configuration
+  glibcompat.py    Unix signals on older GLib and the newer GLibUnix namespace
   tun.py           creating TUN devices
   vpnconfig.py     Config / Ip4Config / Ip6Config dictionaries for NetworkManager
   service.py       nm-vless-service: the NetworkManager VPN plugin (root)
@@ -124,8 +129,10 @@ user-writable source tree: that code runs as root.
    `debian/changelog` (tests check they match) and move *Unreleased* entries in
    `CHANGELOG.md` under the new version.
 2. `make check` and the manual end-to-end test above.
-3. Push a tag `vX.Y.Z`. The *Release* workflow builds the `.deb` for amd64 and arm64
-   and publishes them with `SHA256SUMS` as a GitHub release. The description is made by
+3. Push a tag `vX.Y.Z`. The *Release* workflow builds and installation-tests native
+   Ubuntu 24.04 / Debian 13 DEBs and Fedora 44/45 RPMs on x86-64 and ARM64,
+   sequentially. It publishes them together with `SHA256SUMS` after every target
+   succeeds. The description is made by
    `build-aux/release-notes.sh X.Y.Z` (installation instructions and the
    `CHANGELOG.md` section of the version); run it before tagging to check it.
 
