@@ -6,6 +6,14 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Build the eight native packages in parallel on standard GitHub-hosted runners.
+- Release reuses CI artifacts for the exact tagged commit, waiting for an existing
+  build or dispatching CI once if artifacts are unavailable. Branch/tag pushes no
+  longer run two package matrices. Add a manual dry run without publication.
+- Keep CI running when newer commits arrive, avoiding cancelled commit checks.
+
 ## [0.6.0] - 2026-11-07
 
 ### Added

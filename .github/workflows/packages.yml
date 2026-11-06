@@ -2,7 +2,6 @@ name: Native packages
 
 on:
   workflow_call:
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,7 +11,7 @@ jobs:
     name: ${{ matrix.target }} / ${{ matrix.arch }}
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 8
       matrix:
         target: [ubuntu24.04, debian13, fedora44, fedora45]
         arch: [amd64, arm64]
@@ -52,3 +51,5 @@ jobs:
           name: package-${{ matrix.target }}-${{ matrix.arch }}
           path: ${{ runner.temp }}/packages/*
           if-no-files-found: error
+          retention-days: 7
+          overwrite: true

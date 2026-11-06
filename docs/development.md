@@ -129,12 +129,14 @@ user-writable source tree: that code runs as root.
    `debian/changelog` (tests check they match) and move *Unreleased* entries in
    `CHANGELOG.md` under the new version.
 2. `make check` and the manual end-to-end test above.
-3. Push a tag `vX.Y.Z`. The *Release* workflow builds and installation-tests native
-   Ubuntu 24.04 / Debian 13 DEBs and Fedora 44/45 RPMs on x86-64 and ARM64,
-   sequentially. It publishes them together with `SHA256SUMS` after every target
-   succeeds. The description is made by
-   `build-aux/release-notes.sh X.Y.Z` (installation instructions and the
-   `CHANGELOG.md` section of the version); run it before tagging to check it.
+3. Push the release commit and a tag `vX.Y.Z` (together or separately). CI builds and
+   installation-tests Ubuntu 24.04 / Debian 13 DEBs and Fedora 44/45 RPMs on x86-64
+   and ARM64 in parallel on GitHub. The *Release* workflow waits for that exact
+   commit's CI run and publishes its existing packages with `SHA256SUMS`; it does
+   not run a second package matrix. Missing or expired artifacts cause one CI
+   dispatch at the tag. See [artifact reuse and dry runs](packaging.md#ci-and-releases).
+   The description comes from `build-aux/release-notes.sh X.Y.Z` (installation
+   instructions and the `CHANGELOG.md` section); run it before tagging to check it.
 
 To update the bundled Xray-core, change `version` and both checksums in
 `build-aux/xray.lock` (take them from the release's `.dgst` files) and run the

@@ -3,45 +3,125 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag (vX.Y.Z)
+        required: true
+        type: string
+      dry_run:
+        description: Verify CI artifacts without publishing a release
+        default: true
+        type: boolean
 
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+
 jobs:
-  version:
+  prepare:
     runs-on: ubuntu-24.04
+    timeout-minutes: 70
+    permissions:
+      contents: read
+      actions: write # Dispatch CI only if this commit has no reusable build.
+    outputs:
+      sha: ${{ steps.tag.outputs.sha }}
+      run_id: ${{ steps.ci.outputs.run_id }}
     steps:
       - uses: actions/checkout@v4
-      - name: Check that the tag matches the upstream package version
-        run: |
-          version=$(dpkg-parsechangelog --show-field Version)
-          test "v$version" = "$GITHUB_REF_NAME"
-          build-aux/release-notes.sh "$version" > /dev/null
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
 
-  packages:
-    needs: version
-    uses: ./.github/workflows/packages.yml
+      - name: Resolve the version tag to an exact commit
+        id: tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 build-aux/release_ci.py tag --tag "$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.sha }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Check version and release notes before waiting for CI
+        run: |
+          version=$(dpkg-parsechangelog -lrelease-source/debian/changelog --show-field Version)
+          test "v$version" = "$RELEASE_TAG"
+          release-source/build-aux/release-notes.sh "$version" > /dev/null
+
+      - name: Reuse or wait for the package build for this commit
+        id: ci
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ steps.tag.outputs.sha }}
+        run: |
+          python3 build-aux/release_ci.py wait --tag "$RELEASE_TAG" --sha "$RELEASE_SHA" \
+            >> "$GITHUB_OUTPUT"
 
   publish:
-    needs: packages
+    needs: prepare
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
         with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Download the eight original CI artifacts
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ needs.prepare.outputs.run_id }}
           pattern: package-*
           path: dist
           merge-multiple: true
 
+      - name: Validate packages, generate checksums and check the tag again
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          python3 build-aux/release_ci.py validate --tag "$RELEASE_TAG" --directory dist
+          python3 build-aux/release_ci.py tag --tag "$RELEASE_TAG" --sha "$RELEASE_SHA"
+          release-source/build-aux/release-notes.sh "${RELEASE_TAG#v}" > "$RUNNER_TEMP/notes.md"
+
       - name: Publish the tested DEB and RPM packages together
+        if: github.event_name == 'push' || !inputs.dry_run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          build-aux/release-notes.sh "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/notes.md"
           cd dist
-          sha256sum -- *.deb *.rpm > SHA256SUMS
-          gh release create "$GITHUB_REF_NAME" --verify-tag --repo "$GITHUB_REPOSITORY" \
-            --title "NetworkManager-vless ${GITHUB_REF_NAME#v}" \
+          gh release create "$RELEASE_TAG" --verify-tag --repo "$GITHUB_REPOSITORY" \
+            --title "NetworkManager-vless ${RELEASE_TAG#v}" \
             --notes-file "$RUNNER_TEMP/notes.md" *.deb *.rpm SHA256SUMS
+
+      - name: Record artifact provenance
+        env:
+          CI_RUN_ID: ${{ needs.prepare.outputs.run_id }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          {
+            printf 'Tag: `%s`\n\nCommit: `%s`\n\n' "$RELEASE_TAG" "$RELEASE_SHA"
+            printf 'Packages reused from [CI run %s](%s/%s/actions/runs/%s).\n\n' \
+              "$CI_RUN_ID" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$CI_RUN_ID"
+            printf 'Dry run (no release published): `%s`\n' "$DRY_RUN"
+          } >> "$GITHUB_STEP_SUMMARY"

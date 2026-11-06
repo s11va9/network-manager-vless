@@ -67,10 +67,12 @@ removes packages, and must not be run directly on a workstation.
 
 ## CI and releases
 
-`.github/workflows/packages.yml` is reused by CI and releases. Eight native builds run
-sequentially (`max-parallel: 1`); compilation is limited to two jobs. Branch CI runs
-lint/type/service checks before the package matrix. Tag pushes run the release workflow
-only, avoiding duplicate package builds.
+CI is the only package builder. After lint/type/service checks, it calls
+`.github/workflows/packages.yml` with eight parallel native jobs (`max-parallel: 8`).
+Each uses a separate standard GitHub-hosted `ubuntu-24.04` or `ubuntu-24.04-arm`
+runner; compilation within a container is limited to two jobs. These runners are
+[free for public repositories](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories).
+They do not use the maintainer's workstation. Local container checks remain sequential.
 
 For each target, `ci-package.sh` installs dependencies, requires a working headless
 Broadway display and builds the package with pytest against native libraries and the
@@ -87,8 +89,34 @@ Fedora ships a user-unit preset so subscriptions and the GNOME proxy guard have 
 same first-install defaults as the DEB. Package checks verify both are enabled for
 future sessions; no systemd daemon or desktop session is started inside the container.
 
-Release publication waits for **every** target and uploads DEBs, RPMs and `SHA256SUMS`
-together. Successful CI runs also expose package artifacts.
+Release resolves the tag to its exact commit and reuses the eight artifacts from a
+successful CI run for that commit. If branch and tag are pushed together, it waits
+for the existing CI run instead of starting another matrix or cancelling checks.
+Only same-repository `push` and `workflow_dispatch` runs of `ci.yml` qualify;
+pull-request runs and builds of other commits cannot supply release packages.
+
+CI artifacts are retained for seven days. If no CI run or complete unexpired set
+exists, Release allows a minute for a concurrent branch push to register, then
+dispatches CI once at the version tag and waits. A failed or cancelled CI run blocks
+publication: rerun CI, then rerun Release. No personal token is needed; the prepare
+job uses `GITHUB_TOKEN` with `actions: write` to dispatch CI, while package jobs have
+read-only permissions. CI runs are not automatically cancelled by newer commits.
+
+The publisher downloads the original CI artifacts, requires exactly the eight
+expected native package files, generates `SHA256SUMS`, and verifies the tag still
+points at the selected commit. It uploads all packages and checksums together. The
+workflow summary links the CI run that supplied the packages.
+
+To exercise artifact reuse without publishing or changing an existing release:
+
+```sh
+gh workflow run release.yml --ref main -f tag=v0.6.0 -f dry_run=true
+```
+
+The manual workflow defaults to a dry run. Use `dry_run=false` only to publish an
+existing, unpublished version tag. A dry run can start CI if its artifacts have
+expired; it never creates or edits a GitHub Release. `packages.yml` is callable only
+from CI, so it cannot accidentally be dispatched as a separate duplicate build.
 
 ## Desktop and SELinux validation
 
